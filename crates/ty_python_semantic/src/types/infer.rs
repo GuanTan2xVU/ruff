@@ -1003,6 +1003,13 @@ bitflags::bitflags! {
 
         /// Whether we are currently in a context where `Concatenate` can be legal
         const IN_VALID_CONCATENATE_CONTEXT = 1 << 6;
+
+        /// Whether literal-heavy expressions should be widened during recursive inference.
+        ///
+        /// This is enabled for pathological cases such as huge collection literals or very
+        /// high-arity calls, where preserving every nested literal during inference can cause
+        /// severe performance issues.
+        const PROMOTE_LITERALS = 1 << 7;
     }
 }
 
