@@ -3012,10 +3012,10 @@ func(v1=1, v2="optional", v3="ok")
 func(v1=1, v3="ok", v4=1)
 ```
 
-### Assignability to explicit keyword-only signatures
+### Assignability from unpacked kwargs to explicit keyword-only signatures
 
 A callable using `**kwargs: Unpack[TD2]` should line up with equivalent explicit keyword-only
-signatures, and the assignability should work in both directions.
+signatures when assigning to the explicit form.
 
 ```py
 from typing import Protocol
@@ -3041,12 +3041,12 @@ explicit_ok: ExplicitKwargs = func
 typed_dict_ok: TypedDictKwargs = func
 
 def _(explicit: ExplicitKwargs, typed_dict: TypedDictKwargs) -> None:
-    typed_dict_2: TypedDictKwargs = explicit
     explicit_2: ExplicitKwargs = typed_dict
 
 def func7(*, v1: int, v3: str, v2: str = "") -> None:
     pass
 
+# error: [invalid-assignment]
 typed_dict_from_explicit: TypedDictKwargs = func7
 ```
 
